@@ -6,6 +6,11 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IsiyudisiumController;
+use App\Http\Controllers\DatayudisiumController;
+use App\Models\User;
+use App\Models\Datayudisium;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,17 +27,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/dashboard' ,function () {
-//     return view('dashboard.index', [
-//         "judul" => "dashboard"
+
+
+// Route::get('/dashboard/daftaryudisium' ,function () {
+//     return view('dashboard.daftaryudisium', [
+//         "judul" => "daftaryudisium"
 //     ]);
 // });
 
-Route::get('/dashboard/daftaryudisium' ,function () {
-    return view('dashboard.daftaryudisium', [
-        "judul" => "daftaryudisium"
-    ]);
-});
+Route::get('/dashboard/daftaryudisium', [App\Http\Controllers\DatayudisiumController::class, 'index'])->name('datayudisium.index');
+Route::post('/dashboard/daftaryudisium/store', [App\Http\Controllers\DatayudisiumController::class, 'store'])->name('datayudisium.store');
+Route::put('/dashboard/daftaryudisium/{id}/update', [App\Http\Controllers\DatayudisiumController::class, 'update'])->name('datayudisium.update');
+
 // Route::get('/dashboard/isiyudisium' ,function () {
 //     return view('dashboard.isiyudisium',[
 //         "judul" => "isiyudisium"
@@ -50,7 +56,14 @@ Route::get('/dashboard/isiwisuda' ,function () {
 });
 
 
-Route::get('/dashboard/isiyudisium',[IsiyudisiumController::class, 'index'])->middleware('auth');
+// Route::get('/dashboard/datayudisium', function(User $user) {
+//     return view('dashboard.datayudisium',[
+//         'judul'=>'Data Yudisium',
+//         'data' => $user->datayudisium,
+//     ]);
+// });
+
+Route::get('/dashboard/datayudisium',[DatayudisiumController::class, 'index'])->middleware('auth');
 
 Route::get('/dashboard/profil',[ProfilController::class, 'index'])->middleware('auth');
 
